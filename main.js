@@ -1,15 +1,17 @@
-exports.getSectionsBetween = (text, queries, groupEveryX = 0) => {
-    function escapeUnicode(text) {
-        return text.replace(/\\\\u([0-9a-f]{4})/g, (whole, group1) => String.fromCharCode(parseInt(group1, 16)))
-    }
-    let result = text.split(queries.shift()).slice(1).map(i => { if (!queries.length) return escapeUnicode(i); return escapeUnicode(queries.length > 1 ? queries.reduce((a, b) => i.split(a)[0].split(b)[0]) : i.split(queries[0])[0]) })
-
+String.prototype.escapeUnicode = function () {
+    return this.replace(/\\\\u([0-9a-f]{4})/g, (whole, group1) => String.fromCharCode(parseInt(group1, 16)))
+}
+String.prototype.getBetweenAll = function () {
+    let queries = Array.from(arguments)
+    let result = text.split(queries.shift()).slice(1).map(i => { if (!queries.length) return i.escapeUnicode(); return (queries.length > 1 ? queries.reduce((a, b) => i.split(a)[0].split(b)[0]) : i.split(queries[0])[0]).escapeUnicode() })
+    return result
+    /* 
     if (groupEveryX) {
         let groups = []
         for (let i = 0; i < result.length; i++) {
             let group = []
             for (let j = 0; j < groupEveryX; j++) {
-                group.push(escapeUnicode(result[i++]))
+                group.push((result[i++]).escapeUnicode())
             }
             groups.push(group)
             i--;
@@ -17,18 +19,23 @@ exports.getSectionsBetween = (text, queries, groupEveryX = 0) => {
         return groups
     } else {
         return result
-    }
+    } */
+}
+String.prototype.getBetween = function () {
+    return this.getBetweenAll(arguments)
 }
 
 /**
  * Same as Array.prototype.find but for all objects :)
- * @param {Function} predicate Function( key:string, value:any, object:Object)
+ * @param {(string|Function)} predicate key || Function( key:string, value:any, object:Object)
+ * @returns First object which contains provided key.
+ * @returns First object which matches with provided function.
  */
-Object.prototype.find = function (predicate) {
+Object.prototype._find = function (predicate) {
     for (var i = 0; i < Object.keys(this).length; i++) {
         try {
-            if (func(Object.keys(this)[i], this[Object.keys(this)[i]], this))
-                return typeof this[Object.keys(this)[i]] == "object" ? this[Object.keys(this)[i]] : this;
+            if (predicate === Object.keys(this)[i] || predicate(Object.keys(this)[i], this[Object.keys(this)[i]], this))
+                return this;
         } catch (err) { }
 
         if (typeof this[Object.keys(this)[i]] == "object") {
@@ -39,4 +46,30 @@ Object.prototype.find = function (predicate) {
     }
 
     return undefined;
+}
+Object.prototype.findAll = function (key) {
+    try {
+        return JSON.stringify(this).split(`"${key}"`).slice(1).map(t => t.split("}")[0].split(`,"`)[0].replace(":", "")).map(v => eval(v))
+    } catch (error) {
+
+    }
+
+    return undefined;
+}
+Object.prototype.find = function (key) {
+    try {
+        return this.findAll(key)[0]
+    } catch (error) {
+
+    }
+
+    return undefined;
+}
+
+Array.prototype.unique = function () {
+    return this.filter((v, i, a) => a.indexOf(v) == i)
+}
+
+Array.prototype.clean = function () {
+    return this.filter(a => a != undefined && a != null)
 }
