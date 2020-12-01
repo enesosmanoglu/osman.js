@@ -32,7 +32,7 @@ Object.prototype.find = function (predicate) {
         } catch (err) { }
 
         if (typeof this[Object.keys(this)[i]] == "object") {
-            var o = Object.assign({}, this[Object.keys(this)[i]]).find(func);
+            var o = Object.assign({}, this[Object.keys(this)[i]]).find(predicate);
             if (o != null)
                 return o;
         }
