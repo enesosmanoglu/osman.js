@@ -61,3 +61,14 @@ Object.prototype.find = function (key) {
 Array.prototype.clean = function () {
     return this.filter(a => a != undefined && a != null)
 }
+
+Object.prototype.map = function(cb) {
+    return Object.fromEntries(Object.keys(this).map((v, i, a) => [v, cb(this[v], v, this)]));
+}
+Object.prototype.mapValue = Object.prototype.map;
+Object.prototype.mapKey = function(cb) {
+    return Object.fromEntries(Object.keys(this).map((v, i, a) => [cb(this[v], v, this), this[v]]));
+}
+Object.prototype.mapKeyValue = function(cb) {
+    return Object.fromEntries(Object.keys(this).map((v, i, a) => cb(this[v], v, this)));
+}
