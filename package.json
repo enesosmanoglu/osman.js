@@ -1,0 +1,19 @@
+{
+  "name": "osman.js",
+  "version": "1.0.0",
+  "description": "Additional Javascript codes for ease of coding!",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/enesosmanoglu/osman.js.git"
+  },
+  "author": "Enes Osmanoğlu",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/enesosmanoglu/osman.js/issues"
+  },
+  "homepage": "https://github.com/enesosmanoglu/osman.js#readme"
+}
