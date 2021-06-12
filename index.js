@@ -11,6 +11,9 @@ String.prototype.getBetweenAll = function () {
 String.prototype.getBetween = function () {
     return this.getBetweenAll(...arguments)[0]
 }
+String.prototype.padCenter = function (maxLength, fillString = " ") {
+    return this.padStart(this.length + Math.floor((maxLength - this.length) / 2), fillString).padEnd(maxLength, fillString);
+}
 
 // OBJECT
 Object.prototype._find = function (predicate) {
