@@ -104,3 +104,37 @@ Array.prototype.shuffled = function () {
     }
     return array;
 };
+Array.prototype.insert = function (index, ...values) {
+    this.splice(index, 0, ...values);
+    return this;
+}
+Array.prototype.pushIn = function (index, ...values) {
+    this.splice(index + 1, 0, ...values);
+    return this.length;
+}
+
+let arr = (count, value) => new Array(~~count).fill(value);
+let arrMap = (count, fn) => arr(count).map(fn);
+let arrMerge = (...arrs) => [].concat(...arrs);
+function arrDeepMerge(array, a = []) {
+    for (let i = 0; i < array.length; i++) {
+        const element = array[i];
+        if (typeof (element) == "object" && element.push != undefined) {
+            a = arrDeepMerge(element, a);
+        } else {
+            a.push(element);
+        }
+    }
+    return a;
+}
+let arrNum = (start, end) => arrMap(end - start + 1, (v, i, a) => (start - 1) + (i + 1));
+let arrNumGrid = (start, end, divide) => arr(Math.ceil((end - start + 1) / divide)).map((v, i, a) => arrNum(start + i * divide, start + i * divide + divide - 1)).map(a => a.map(n => n <= end ? n : null).filter(n => n))
+let arrNumGridCenter = (start, end, divide) => arrNumGrid(start, end, divide).map(a => a.length == divide ? a : (arrMerge(arr((divide - a.length) / 2), ...a, arr((divide - a.length) / 2))))//.map(a => a.length == divide ? a : a.concat(undefined))
+
+Array.new = arr;
+Array.newMap = arrMap;
+Array.merge = arrMerge;
+Array.deepMerge = arrDeepMerge;
+Array.newNum = arrNum;
+Array.newNumGrid = arrNumGrid;
+Array.newNumGridCenter = arrNumGridCenter;
