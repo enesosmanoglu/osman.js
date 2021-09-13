@@ -5,14 +5,13 @@ String.prototype.escapeUnicode = function () {
 String.prototype.escapeRegExp = function () {
     return this.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 };
-String.prototype.getBetweenAll = function () {
-    let queries = Array.from(arguments);
-    queries = queries.map(s => s.replace(/\[/g, "\\["));
-    let result = Array.from(this.match(new RegExp(`(?<=${queries[0]})(.*?)(?=\s*${queries[1]})`, "g")));
+String.prototype.getBetweenAll = function (...args) {
+    args = args.map(a => a.escapeRegExp());
+    let result = Array.from(this.match(new RegExp(`(?<=${args[0]})(.*?)(?=\s*${args[1]})`, "g")));
     return result;
 };
-String.prototype.getBetween = function () {
-    return this.getBetweenAll(...arguments)[0];
+String.prototype.getBetween = function (...args) {
+    return this.getBetweenAll(...args)[0];
 };
 String.prototype.padCenter = function (maxLength, fillString = " ") {
     return this.padStart(this.length + Math.floor((maxLength - this.length) / 2), fillString).padEnd(maxLength, fillString);
