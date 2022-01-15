@@ -106,14 +106,14 @@ Array.prototype.shuffled = function () {
 Array.prototype.insert = function (index, ...values) {
     this.splice(index, 0, ...values);
     return this;
-}
+};
 Array.prototype.pushIn = function (index, ...values) {
     this.splice(index + 1, 0, ...values);
     return this.length;
-}
+};
 Array.prototype.removeIndex = function (i) {
     return this.splice(i, 1);
-}
+};
 Array.prototype.removeIndexes = function (...args) {
     let result = [];
     args.sort();
@@ -121,10 +121,10 @@ Array.prototype.removeIndexes = function (...args) {
         result.push(this.splice(v - i, 1)); // The indexes will be shifted once after each deletion, so we need to reduce the indexes for each deletion count.
     });
     return result.flat();
-}
+};
 Array.prototype.remove = function (...args) {
-    return this.removeIndexes(...args.map(e => this.findIndex(v => v == e)).filter(i => i != -1))
-}
+    return this.removeIndexes(...args.map(e => this.findIndex(v => v == e)).filter(i => i != -1));
+};
 
 let arr = (count, value) => new Array(~~count).fill(value);
 let arrMap = (count, fn) => arr(count).map(fn);
