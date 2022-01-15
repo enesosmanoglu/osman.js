@@ -125,6 +125,15 @@ Array.prototype.removeIndexes = function (...args) {
 Array.prototype.remove = function (...args) {
     return this.removeIndexes(...args.map(e => this.findIndex(v => v == e)).filter(i => i != -1));
 };
+Array.prototype.swap = function (i, j) {
+    [this[i], this[j]] = [this[j], this[i]];
+};
+Array.prototype.randomIndex = function () {
+    return Math.floor((Math.random() * this.length));
+};
+Array.prototype.random = function () {
+    return this[this.randomIndex()];
+};
 
 let arr = (count, value) => new Array(~~count).fill(value);
 let arrMap = (count, fn) => arr(count).map(fn);
