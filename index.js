@@ -85,7 +85,7 @@ Object.prototype.mapKeyValue = function (cb) {
 Array.prototype.unique = function () {
     return this.filter((v, i, a) => a.indexOf(v) == i);
 };
-Array.prototype.clean = function () {
+Array.prototype.valid = function () {
     return this.filter(a => a != undefined && a != null);
 };
 Array.prototype.shuffle = function () {
