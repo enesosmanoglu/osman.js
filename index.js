@@ -149,8 +149,9 @@ Array.prototype.removeFilter = function (fn) {
 Array.prototype.removeFind = function (fn) {
     return this.remove(this.find(fn));
 };
-Array.prototype.swap = function (i, j) {
+Array.prototype.swapIndexes = function (i, j) {
     [this[i], this[j]] = [this[j], this[i]];
+    return this;
 };
 Array.prototype.randomIndex = function () {
     return Math.floor((Math.random() * this.length));
