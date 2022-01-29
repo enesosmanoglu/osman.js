@@ -105,6 +105,9 @@ Object.prototype.random = function () {
     return this[this.randomKey()];
 };
 Object.prototype.randomValue = Object.prototype.random;
+Object.prototype.allInt = function (radix) {
+    return this.map(v => parseInt(v, radix));
+};
 
 // ARRAY
 Array.prototype.unique = function () {
@@ -191,6 +194,9 @@ Array.prototype.copyBasic = function () {
 };
 Array.prototype.copyJSON = function () {
     return JSON.parse(JSON.stringify(this));
+};
+Array.prototype.allInt = function (radix) {
+    return this.map(v => parseInt(v, radix));
 };
 
 let arr = (count, value) => new Array(~~count).fill(value);
