@@ -1,10 +1,10 @@
 // STRING
-String.prototype.escapeUnicode = function () {
-    return this.replace(/\\\\u([0-9a-f]{4})/g, (whole, group1) => String.fromCharCode(parseInt(group1, 16)));
-};
-String.prototype.escapeRegExp = function () {
-    return this.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-};
+Object.defineProperty(String.prototype, 'escapeUnicode', {
+    get: function () { return this.replace(/\\\\u([0-9a-f]{4})/g, (whole, group1) => String.fromCharCode(parseInt(group1, 16))); }
+});
+Object.defineProperty(String.prototype, 'escapeRegExp', {
+    get: function () { return this.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); }
+});
 String.prototype.getBetweenAll = function (...args) {
     args = args.map(a => a.escapeRegExp());
     let result = Array.from(this.match(new RegExp(`(?<=${args[0]})(.*?)(?=\s*${args[1]})`, "g")));
@@ -38,15 +38,18 @@ String.prototype.format = function () {
     }
     return str;
 };
-String.prototype.reverse = function () {
-    return this.split('').reverse().join('');
-};
+Object.defineProperty(String.prototype, 'reverse', {
+    get: function () { return this.split('').reverse().join(''); }
+});
 String.prototype.replaceEnd = function (...args) {
     return this.reverse().replace(...args.map(s => typeof s == "string" ? s.reverse() : s)).reverse();
 };
-String.prototype.toInt = function (radix) {
+String.prototype.toIntR = function (radix) {
     return parseInt(this, radix);
 };
+Object.defineProperty(String.prototype, 'toInt', {
+    get: function () { return parseInt(this); }
+});
 
 // OBJECT
 Object.prototype._find = function (predicate) {
@@ -98,30 +101,35 @@ Object.prototype.copyBasic = function () {
 Object.prototype.copyJSON = function () {
     return JSON.parse(JSON.stringify(this));
 };
-Object.prototype.randomKey = function () {
-    return Math.floor((Math.random() * Object.keys(this).length));
-};
-Object.prototype.random = function () {
-    return this[this.randomKey()];
-};
-Object.prototype.randomValue = Object.prototype.random;
-Object.prototype.allInt = function (radix) {
+Object.defineProperty(Object.prototype, 'randomKey', {
+    get: function () { return Object.keys(this)[Math.floor((Math.random() * Object.keys(this).length))]; }
+});
+Object.defineProperty(Object.prototype, 'random', {
+    get: function () { return this[this.randomKey]; }
+});
+Object.defineProperty(Object.prototype, 'randomValue', {
+    get: function () { return this[this.randomKey]; }
+});
+Object.prototype.allIntR = function (radix) {
     return this.map(v => parseInt(v, radix));
 };
+Object.defineProperty(Object.prototype, 'allInt', {
+    get: function () { return this.map(v => parseInt(v)); }
+});
 
 // ARRAY
-Array.prototype.unique = function () {
-    return this.filter((v, i, a) => a.indexOf(v) == i);
-};
-Array.prototype.valid = function () {
-    return this.filter(a => a != undefined && a != null);
-};
-Array.prototype.trueItems = function () {
-    return this.filter(a => a);
-};
-Array.prototype.falseItems = function () {
-    return this.filter(a => !a);
-};
+Object.defineProperty(Array.prototype, 'unique', {
+    get: function () { return this.filter((v, i, a) => a.indexOf(v) == i); }
+});
+Object.defineProperty(Array.prototype, 'valid', {
+    get: function () { return this.filter(v => v != undefined && v != null); }
+});
+Object.defineProperty(Array.prototype, 'trueItems', {
+    get: function () { return this.filter(v => v); }
+});
+Object.defineProperty(Array.prototype, 'falseItems', {
+    get: function () { return this.filter(v => !v); }
+});
 Array.prototype.shuffle = function () {
     for (let i = this.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
@@ -129,14 +137,9 @@ Array.prototype.shuffle = function () {
     }
     return this;
 };
-Array.prototype.shuffled = function () {
-    let array = Array.from(this);
-    for (let i = array.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [array[i], array[j]] = [array[j], array[i]];
-    }
-    return array;
-};
+Object.defineProperty(Array.prototype, 'shuffled', {
+    get: function () { return Array.from(this).shuffle(); }
+});
 Array.prototype.insert = function (index, ...values) {
     this.splice(index, 0, ...values);
     return this;
@@ -183,28 +186,31 @@ Array.prototype.swapFind = function (f1, f2) {
         this.swapIndexes(i, j);
     return this;
 };
-Array.prototype.randomIndex = function () {
-    return Math.floor((Math.random() * this.length));
-};
-Array.prototype.random = function () {
-    return this[this.randomIndex()];
-};
+Object.defineProperty(Array.prototype, 'randomIndex', {
+    get: function () { return Math.floor((Math.random() * this.length)); }
+});
+Object.defineProperty(Array.prototype, 'random', {
+    get: function () { return this[this.randomIndex]; }
+});
 Array.prototype.copyBasic = function () {
     return [...this];
 };
 Array.prototype.copyJSON = function () {
     return JSON.parse(JSON.stringify(this));
 };
-Array.prototype.allInt = function (radix) {
+Array.prototype.allIntR = function (radix) {
     return this.map(v => parseInt(v, radix));
 };
+Object.defineProperty(Array.prototype, 'allInt', {
+    get: function () { return this.map(v => parseInt(v)); }
+});
 Object.defineProperty(Array.prototype, 'first', {
-    get: function () { return this[0] },
-    set: function (v) { this[0] = v }
+    get: function () { return this[0]; },
+    set: function (v) { this[0] = v; }
 });
 Object.defineProperty(Array.prototype, 'last', {
-    get: function () { return this[this.length - 1] },
-    set: function (v) { return this[this.length - 1] = v }
+    get: function () { return this[this.length - 1]; },
+    set: function (v) { this[this.length - 1] = v; }
 });
 
 Array.new = (count, value) => new Array(~~count).fill(value);
