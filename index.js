@@ -38,6 +38,15 @@ String.prototype.format = function () {
     }
     return str;
 };
+String.prototype.reverse = function () {
+    return this.split('').reverse().join('');
+};
+String.prototype.replaceEnd = function (...args) {
+    return this.reverse().replace(...args.map(s => typeof s == "string" ? s.reverse() : s)).reverse();
+};
+String.prototype.toInt = function (radix) {
+    return parseInt(this, radix);
+};
 
 // OBJECT
 Object.prototype._find = function (predicate) {
