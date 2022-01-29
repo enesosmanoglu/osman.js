@@ -207,28 +207,10 @@ Object.defineProperty(Array.prototype, 'last', {
     set: function (v) { return this[this.length - 1] = v }
 });
 
-let arr = (count, value) => new Array(~~count).fill(value);
-let arrMap = (count, fn) => arr(count).map(fn);
-let arrMerge = (...arrs) => [].concat(...arrs);
-function arrDeepMerge(array, a = []) {
-    for (let i = 0; i < array.length; i++) {
-        const element = array[i];
-        if (typeof (element) == "object" && element.push != undefined) {
-            a = arrDeepMerge(element, a);
-        } else {
-            a.push(element);
-        }
-    }
-    return a;
-}
-let arrNum = (start, end) => arrMap(end - start + 1, (v, i, a) => (start - 1) + (i + 1));
-let arrNumGrid = (start, end, divide) => arr(Math.ceil((end - start + 1) / divide)).map((v, i, a) => arrNum(start + i * divide, start + i * divide + divide - 1)).map(a => a.map(n => n <= end ? n : null).filter(n => n))
-let arrNumGridCenter = (start, end, divide) => arrNumGrid(start, end, divide).map(a => a.length == divide ? a : (arrMerge(arr((divide - a.length) / 2), ...a, arr((divide - a.length) / 2))))//.map(a => a.length == divide ? a : a.concat(undefined))
-
-Array.new = arr;
-Array.newMap = arrMap;
-Array.merge = arrMerge;
-Array.deepMerge = arrDeepMerge;
-Array.newNum = arrNum;
-Array.newNumGrid = arrNumGrid;
-Array.newNumGridCenter = arrNumGridCenter;
+Array.new = (count, value) => new Array(~~count).fill(value);
+Array.newMap = (count, fn) => Array.new(count).map(fn);
+Array.merge = (...arrs) => [...arrs.flat()];
+Array.flatMerge = (...arrs) => [...arrs.map(arr => arr.flat()).flat()];
+Array.newNum = (start, end) => Array.newMap(end - start + 1, (v, i, a) => (start - 1) + (i + 1));
+Array.newNumGrid = (start, end, divide) => Array.new(Math.ceil((end - start + 1) / divide)).map((v, i, a) => Array.newNum(start + i * divide, start + i * divide + divide - 1)).map(a => a.map(n => n <= end ? n : null).filter(n => n))
+Array.newNumGridCenter = (start, end, divide) => Array.newNumGrid(start, end, divide).map(a => a.length == divide ? a : (Array.merge(Array.new((divide - a.length) / 2), ...a, Array.new((divide - a.length) / 2))))//.map(a => a.length == divide ? a : a.concat(undefined))
