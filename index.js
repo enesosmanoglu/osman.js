@@ -98,6 +98,13 @@ Object.prototype.copyBasic = function () {
 Object.prototype.copyJSON = function () {
     return JSON.parse(JSON.stringify(this));
 };
+Object.prototype.randomKey = function () {
+    return Math.floor((Math.random() * Object.keys(this).length));
+};
+Object.prototype.random = function () {
+    return this[this.randomKey()];
+};
+Object.prototype.randomValue = Object.prototype.random;
 
 // ARRAY
 Array.prototype.unique = function () {
