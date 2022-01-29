@@ -100,6 +100,12 @@ Array.prototype.unique = function () {
 Array.prototype.valid = function () {
     return this.filter(a => a != undefined && a != null);
 };
+Array.prototype.trueItems = function () {
+    return this.filter(a => a);
+};
+Array.prototype.falseItems = function () {
+    return this.filter(a => !a);
+};
 Array.prototype.shuffle = function () {
     for (let i = this.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
