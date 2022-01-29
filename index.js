@@ -143,6 +143,12 @@ Array.prototype.removeIndexes = function (...args) {
 Array.prototype.remove = function (...args) {
     return this.removeIndexes(...args.map(e => this.findIndex(v => v == e)).filter(i => i != -1));
 };
+Array.prototype.removeFilter = function (fn) {
+    return this.remove(...this.filter(fn));
+};
+Array.prototype.removeFind = function (fn) {
+    return this.remove(this.find(fn));
+};
 Array.prototype.swap = function (i, j) {
     [this[i], this[j]] = [this[j], this[i]];
 };
