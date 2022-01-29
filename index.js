@@ -92,6 +92,12 @@ Object.prototype.mapKeyValue = function (cb) {
     let obj = this;
     return Object.fromEntries(Object.keys(obj).map((key, i, a, value = obj[key]) => cb(value, key, obj, i)));
 };
+Object.prototype.copyBasic = function () {
+    return {...this};
+};
+Object.prototype.copyJSON = function () {
+    return JSON.parse(JSON.stringify(this));
+};
 
 // ARRAY
 Array.prototype.unique = function () {
@@ -172,6 +178,12 @@ Array.prototype.randomIndex = function () {
 };
 Array.prototype.random = function () {
     return this[this.randomIndex()];
+};
+Array.prototype.copyBasic = function () {
+    return [...this];
+};
+Array.prototype.copyJSON = function () {
+    return JSON.parse(JSON.stringify(this));
 };
 
 let arr = (count, value) => new Array(~~count).fill(value);
