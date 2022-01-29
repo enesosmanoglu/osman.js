@@ -1,8 +1,14 @@
 // STRING
-Object.defineProperty(String.prototype, 'escapeUnicode', {
+String.prototype.escapeUnicode = function () {
+    return this.replace(/\\\\u([0-9a-f]{4})/g, (whole, group1) => String.fromCharCode(parseInt(group1, 16)));
+};
+String.prototype.escapeRegExp = function () {
+    return this.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+};
+Object.defineProperty(String.prototype, 'unicodeEscaped', {
     get: function () { return this.replace(/\\\\u([0-9a-f]{4})/g, (whole, group1) => String.fromCharCode(parseInt(group1, 16))); }
 });
-Object.defineProperty(String.prototype, 'escapeRegExp', {
+Object.defineProperty(String.prototype, 'regExpEscaped', {
     get: function () { return this.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); }
 });
 String.prototype.getBetweenAll = function (...args) {
@@ -38,11 +44,14 @@ String.prototype.format = function () {
     }
     return str;
 };
-Object.defineProperty(String.prototype, 'reverse', {
+String.prototype.reverse = function () {
+    return this.split('').reverse().join('');
+}
+Object.defineProperty(String.prototype, 'reversed', {
     get: function () { return this.split('').reverse().join(''); }
 });
 String.prototype.replaceEnd = function (...args) {
-    return this.reverse().replace(...args.map(s => typeof s == "string" ? s.reverse() : s)).reverse();
+    return this.reversed.replace(...args.map(s => typeof s == "string" ? s.reversed : s)).reversed;
 };
 String.prototype.toIntR = function (radix) {
     return parseInt(this, radix);
