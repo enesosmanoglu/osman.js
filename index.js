@@ -153,6 +153,20 @@ Array.prototype.swapIndexes = function (i, j) {
     [this[i], this[j]] = [this[j], this[i]];
     return this;
 };
+Array.prototype.swap = function (v1, v2) {
+    let i = this.findIndex(v => v == v1);
+    let j = this.findIndex(v => v == v2);
+    if (i != -1 && j != -1)
+        this.swapIndexes(i, j);
+    return this;
+};
+Array.prototype.swapFind = function (f1, f2) {
+    let i = this.findIndex(f1);
+    let j = this.findIndex(f2);
+    if (i != -1 && j != -1)
+        this.swapIndexes(i, j);
+    return this;
+};
 Array.prototype.randomIndex = function () {
     return Math.floor((Math.random() * this.length));
 };
