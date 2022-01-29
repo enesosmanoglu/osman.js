@@ -80,14 +80,17 @@ Object.prototype.find = function (key) {
     return undefined;
 };
 Object.prototype.map = function (cb) {
-    return Object.fromEntries(Object.keys(this).map((v, i, a) => [v, cb(this[v], v, this)]));
+    let obj = this;
+    return Object.fromEntries(Object.keys(obj).map((key, i, a, value = obj[key]) => [key, cb(value, key, obj, i)]));
 };
 Object.prototype.mapValue = Object.prototype.map;
 Object.prototype.mapKey = function (cb) {
-    return Object.fromEntries(Object.keys(this).map((v, i, a) => [cb(this[v], v, this), this[v]]));
+    let obj = this;
+    return Object.fromEntries(Object.keys(obj).map((key, i, a, value = obj[key]) => [cb(value, key, obj, i), value]));
 };
 Object.prototype.mapKeyValue = function (cb) {
-    return Object.fromEntries(Object.keys(this).map((v, i, a) => cb(this[v], v, this)));
+    let obj = this;
+    return Object.fromEntries(Object.keys(obj).map((key, i, a, value = obj[key]) => cb(value, key, obj, i)));
 };
 
 // ARRAY
