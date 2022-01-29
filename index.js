@@ -93,7 +93,7 @@ Object.prototype.mapKeyValue = function (cb) {
     return Object.fromEntries(Object.keys(obj).map((key, i, a, value = obj[key]) => cb(value, key, obj, i)));
 };
 Object.prototype.copyBasic = function () {
-    return {...this};
+    return { ...this };
 };
 Object.prototype.copyJSON = function () {
     return JSON.parse(JSON.stringify(this));
@@ -198,6 +198,14 @@ Array.prototype.copyJSON = function () {
 Array.prototype.allInt = function (radix) {
     return this.map(v => parseInt(v, radix));
 };
+Object.defineProperty(Array.prototype, 'first', {
+    get: function () { return this[0] },
+    set: function (v) { this[0] = v }
+});
+Object.defineProperty(Array.prototype, 'last', {
+    get: function () { return this[this.length - 1] },
+    set: function (v) { return this[this.length - 1] = v }
+});
 
 let arr = (count, value) => new Array(~~count).fill(value);
 let arrMap = (count, fn) => arr(count).map(fn);
