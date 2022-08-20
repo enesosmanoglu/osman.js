@@ -4,7 +4,8 @@
   "description": "Additional Javascript codes for ease of coding!",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js"
+    "start": "node index.js",
+    "test": "echo \"No test specified\""
   },
   "repository": {
     "type": "git",
