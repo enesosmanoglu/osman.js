@@ -1,4 +1,8 @@
-Object.defineProperty(Array.prototype, 'unique', {
+function defineProperty(...args) {
+    if (args[1] in args[0] === false)
+        Object.defineProperty(...args);
+}
+defineProperty(Array.prototype, 'unique', {
     get: function () {
         let o = {};
         for (let i = 0; i < this.length; i++)
@@ -7,13 +11,13 @@ Object.defineProperty(Array.prototype, 'unique', {
         return Object.keys(o).map(k => o[k]);
     }
 });
-Object.defineProperty(Array.prototype, 'nonNullish', {
+defineProperty(Array.prototype, 'nonNullish', {
     get: function () { return this.filter(v => v !== undefined && v !== null); }
 });
-Object.defineProperty(Array.prototype, 'truthy', {
+defineProperty(Array.prototype, 'truthy', {
     get: function () { return this.filter(v => v); }
 });
-Object.defineProperty(Array.prototype, 'falsy', {
+defineProperty(Array.prototype, 'falsy', {
     get: function () { return this.filter(v => !v); }
 });
 Array.prototype.shuffle = function () {
@@ -23,7 +27,7 @@ Array.prototype.shuffle = function () {
     }
     return this;
 };
-Object.defineProperty(Array.prototype, 'shuffled', {
+defineProperty(Array.prototype, 'shuffled', {
     get: function () { return Array.from(this).shuffle(); }
 });
 Array.prototype.insert = function (index, ...values) {
@@ -74,10 +78,10 @@ Array.prototype.swapFind = function (f1, f2) {
         this.swapIndexes(i, j);
     return this;
 };
-Object.defineProperty(Array.prototype, 'randomIndex', {
+defineProperty(Array.prototype, 'randomIndex', {
     get: function () { return Math.floor((Math.random() * this.length)); }
 });
-Object.defineProperty(Array.prototype, 'random', {
+defineProperty(Array.prototype, 'random', {
     get: function () { return this[this.randomIndex]; }
 });
 Array.prototype.copyBasic = function () {
@@ -89,14 +93,14 @@ Array.prototype.copyJSON = function () {
 Array.prototype.toIntR = function (radix) {
     return this.map(v => parseInt(v, radix));
 };
-Object.defineProperty(Array.prototype, 'toInt', {
+defineProperty(Array.prototype, 'toInt', {
     get: function () { return this.map(v => parseInt(v)); }
 });
-Object.defineProperty(Array.prototype, 'first', {
+defineProperty(Array.prototype, 'first', {
     get: function () { return this[0]; },
     set: function (v) { this[0] = v; }
 });
-Object.defineProperty(Array.prototype, 'last', {
+defineProperty(Array.prototype, 'last', {
     get: function () { return this[this.length - 1]; },
     set: function (v) { this[this.length - 1] = v; }
 });
@@ -105,10 +109,10 @@ Array.getDepth = function getArrayDepth(array) {
     return array instanceof Array ? Math.max(0, ...array.map(getArrayDepth)) + 1 : 0;
 }
 
-Object.defineProperty(Array.prototype, 'depth', {
+defineProperty(Array.prototype, 'depth', {
     get: function () { return Array.getDepth(this); }
 });
-Object.defineProperty(Array.prototype, 'straight', {
+defineProperty(Array.prototype, 'straight', {
     get: function () { return this.flat(Infinity); }
 });
 
