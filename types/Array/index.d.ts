@@ -1,5 +1,8 @@
 export declare global {
     interface Array<T> {
+        /**
+         * Returns unique values in the array.
+         */
         unique: Array<T>;
         /**
          * Filters non-nullish values in the array.

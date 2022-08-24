@@ -1,5 +1,11 @@
 Object.defineProperty(Array.prototype, 'unique', {
-    get: function () { return this.filter((v, i, a) => a.indexOf(v) == i); }
+    get: function () {
+        let o = {};
+        for (let i = 0; i < this.length; i++)
+            try { o[JSON.stringify(this[i]) + '::' + typeof this[i]] = this[i]; }
+            catch { o[this[i] + '::' + typeof this[i]] = this[i]; }
+        return Object.keys(o).map(k => o[k]);
+    }
 });
 Object.defineProperty(Array.prototype, 'nonNullish', {
     get: function () { return this.filter(v => v !== undefined && v !== null); }
