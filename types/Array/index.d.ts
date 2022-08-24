@@ -2,8 +2,26 @@ export declare global {
     interface Array<T> {
         unique: Array<T>;
         valid: Array<T>;
-        trueItems: Array<T>;
-        falseItems: Array<T>;
+        /**
+         * Filters truthy values in the array.
+         * 
+         * ```this.filter(v => v);```
+         * 
+         * *If you don't know what truthy value is,
+         * you can check this site:
+         * https://developer.mozilla.org/en-US/docs/Glossary/Truthy*
+         */
+        truthy: Array<T>;
+        /**
+         * Filters falsy values in the array.
+         * 
+         * ```this.filter(v => !v);```
+         * 
+         * *If you don't know what falsy value is,
+         * you can check this site:
+         * https://developer.mozilla.org/en-US/docs/Glossary/Falsy*
+         */
+        falsy: Array<T>;
 
         shuffle(): Array<T>;
         shuffled: Array<T>;

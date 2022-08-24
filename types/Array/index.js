@@ -4,10 +4,10 @@ Object.defineProperty(Array.prototype, 'unique', {
 Object.defineProperty(Array.prototype, 'valid', {
     get: function () { return this.filter(v => v != undefined && v != null); }
 });
-Object.defineProperty(Array.prototype, 'trueItems', {
+Object.defineProperty(Array.prototype, 'truthy', {
     get: function () { return this.filter(v => v); }
 });
-Object.defineProperty(Array.prototype, 'falseItems', {
+Object.defineProperty(Array.prototype, 'falsy', {
     get: function () { return this.filter(v => !v); }
 });
 Array.prototype.shuffle = function () {
