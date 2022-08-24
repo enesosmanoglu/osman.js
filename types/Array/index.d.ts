@@ -1,7 +1,16 @@
 export declare global {
     interface Array<T> {
         unique: Array<T>;
-        valid: Array<T>;
+        /**
+         * Filters non-nullish values in the array.
+         * 
+         * ```this.filter(v => v !== undefined && v !== null);```
+         * 
+         * *If you don't know what nullish value is,
+         * you can check this site:
+         * https://developer.mozilla.org/en-US/docs/Glossary/Nullish*
+         */
+        nonNullish: Array<T>;
         /**
          * Filters truthy values in the array.
          * 

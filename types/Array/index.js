@@ -1,8 +1,8 @@
 Object.defineProperty(Array.prototype, 'unique', {
     get: function () { return this.filter((v, i, a) => a.indexOf(v) == i); }
 });
-Object.defineProperty(Array.prototype, 'valid', {
-    get: function () { return this.filter(v => v != undefined && v != null); }
+Object.defineProperty(Array.prototype, 'nonNullish', {
+    get: function () { return this.filter(v => v !== undefined && v !== null); }
 });
 Object.defineProperty(Array.prototype, 'truthy', {
     get: function () { return this.filter(v => v); }
